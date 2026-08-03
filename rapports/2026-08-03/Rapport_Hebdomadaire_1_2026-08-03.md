@@ -1,14 +1,14 @@
-# RAPPORT HEBDOMADAIRE
+# RAPPORT HEBDOMADAIRE 1
 ## MARKETING NUMERIQUE   / SESSION JUILLET 2026
 
 **Tuteur :** Jesse Adirigno Ogoula
-**Période du projet :** du 20 juillet au 4 août 2026
+**Période du projet :** du 27 juillet au 3 août 2026
 **Groupe concerné :** MN Groupe 1
 **Nombre d'apprenants :** 115
 
 ## 1.1 INTRODUCTION GÉNÉRALE
 
-La session de juillet 2026 de la formation « Les bases du marketing numérique » pour le Groupe 1 a réuni 115 apprenants issus de divers horizons à travers l'Afrique francophone. Cette première semaine s'est concentrée sur l'immersion, la découverte de la plateforme et l'entrée dans la Séquence 1 (Introduction au marketing numérique). L'accompagnement a été structuré autour de deux séances collectives en visioconférence :
+La session de juillet 2026 de la formation « Les bases du marketing numérique » pour le Groupe 1 réunit 115 apprenants issus de divers horizons à travers l'Afrique francophone. Cette première semaine s'est concentrée sur l'immersion, la découverte de la plateforme et l'entrée dans la Séquence 1 (Introduction au marketing numérique). L'accompagnement a été structuré autour de 1 séance collective en visioconférence du fait que le sondage pour les disponibilités a pris du temps, mais aussi pour rappeler les jours et heures qui ont été choisis ensemble pour nos sessions :
 - Mercredi 18H GMT
 - Samedi 17H GMT
 
