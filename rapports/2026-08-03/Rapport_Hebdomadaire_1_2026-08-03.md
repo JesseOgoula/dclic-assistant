@@ -2,11 +2,9 @@
 ## MARKETING NUMERIQUE   / SESSION JUILLET 2026
 
 **Tuteur :** Jesse Adirigno Ogoula
-**Période du projet :** du 27 juillet au 3 août 2026
+**Période du projet :** du 20 juillet au 4 août 2026
 **Groupe concerné :** MN Groupe 1
 **Nombre d'apprenants :** 115
-
----
 
 ## 1.1 INTRODUCTION GÉNÉRALE
 
@@ -16,7 +14,6 @@ La session de juillet 2026 de la formation « Les bases du marketing numérique 
 
 Et d'un suivi continu via WhatsApp et mails pour garantir une prise en main efficace des outils pédagogiques.
 
----
 
 ## 2. BILAN DE LA SEMAINE
 
@@ -27,14 +24,14 @@ Et d'un suivi continu via WhatsApp et mails pour garantir une prise en main effi
 2. Prise en main de la plateforme D-CLIC et visionnage des vidéos de présentation.
 3. Découverte de la Séquence 1 : Introduction au marketing numérique.
 
-**Synthèse de l'achèvement des activités (Statistiques au 03/08) :**
-- Lettre d'engagement : 72 / 115 (63%).
-- Séquence 1 (Introduction au marketing numérique) : 32 terminés, 44 en cours (Moyenne : 48.2%).
-- Séquence 2 (Découverte des méthodes et outils) : 10 terminés, 11 en cours (Moyenne : 13.8%).
-- Séquence 3 (Gestion d'une campagne marketing) : 4 terminés, 6 en cours (Moyenne : 5.7%).
-- Séquence 4 (Production et diffusion des contenus) : 3 en cours (Moyenne : 1.0%).
+**Synthèse de l'achèvement des activités (Statistiques au 04/08) :**
+- Lettre d'engagement (Préalable) : 83 / 115 (72%).
+- Séquence 1 (Introduction au marketing numérique) : 32 terminés, 44 en cours, 39 non commencés (Moyenne : 48.2%).
+- Séquence 2 (Découverte des méthodes et outils) : 10 terminés, 11 en cours, 94 non commencés (Moyenne : 13.8%).
+- Séquence 3 (Gestion d'une campagne marketing) : 4 terminés, 6 en cours, 105 non commencés (Moyenne : 5.7%).
+- Séquence 4 (Production et diffusion des contenus) : 0 terminés, 3 en cours, 112 non commencés (Moyenne : 1.0%).
 - Taux de complétion moyen global : 9.2%.
-- Total des validations sur la semaine : 770.
+- Total des validations sur la période : 813.
 - Jour le plus actif : Samedi (159 validations).
 
 **Participation aux visioconférences :**
@@ -53,10 +50,8 @@ Et d'un suivi continu via WhatsApp et mails pour garantir une prise en main effi
   - Activité : Échanges riches qui ont permis de faire le point sur la première semaine et de lever les premières interrogations des apprenants.
   - Résultat : Bonne dynamique de groupe avec 55 participants connectés.
 
----
-
 ## 3. ALERTES ET POINTS D'ATTENTION
 
-- **Lettre d'engagement :** 43 apprenants (37%) n'ont pas encore déposé leur lettre d'engagement. Une relance ciblée est prévue en début de semaine.
+- **Lettre d'engagement :** 32 apprenants (28%) n'ont pas encore déposé leur lettre d'engagement. Une relance ciblée est prévue en début de semaine.
 - **Inactivité :** 62 apprenants sont classés inactifs et 12 sont identifiés comme décrocheurs. Des messages de relance personnalisés ont été envoyés aux apprenants ne s'étant pas encore connectés afin d'identifier d'éventuels blocages techniques ou organisationnels.
 - **Disponibilité :** Plusieurs apprenants ont signalé des contraintes professionnelles ou personnelles impactant leur rythme. Ils ont été encouragés à privilégier la régularité, même sur de courtes durées.

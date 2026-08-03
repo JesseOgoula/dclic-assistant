@@ -305,22 +305,65 @@ function buildFullHtml(bodyHtml, logoBase64) {
     color: var(--color-text-light);
   }
 
+  /* ---- Page Footer ---- */
+  .page-footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    text-align: center;
+    font-size: 9pt;
+    color: var(--color-text-light);
+    padding: 10px 0;
+    background: var(--color-bg);
+    border-top: 1px solid var(--color-border);
+  }
+  .page-footer-title {
+    font-weight: 600;
+    color: var(--color-primary);
+    margin-bottom: 2px;
+  }
+
+  /* ---- Print Layout Spaces ---- */
+  .header-space { height: 25mm; }
+  .footer-space { height: 25mm; }
+  table.report-layout { width: 100%; border-collapse: collapse; }
+  table.report-layout td { padding: 0; }
+
   /* ---- Print ---- */
   @media print {
-    body { padding: 0; }
+    body { padding: 0 18mm; }
     @page {
       size: A4;
-      margin: 18mm 18mm 18mm 18mm;
+      margin: 0;
     }
-    .page-header {
-      position: running(header);
-    }
+    .page-header { position: relative; }
+    .page-footer { position: fixed; bottom: 0; left: 0; width: 100%; padding: 10px 18mm; box-sizing: border-box; }
   }
 </style>
 </head>
 <body>
-${logoBlock}
-${bodyHtml}
+  <div class="page-footer">
+    <div class="page-footer-title">D-CLIC : FORMEZ-VOUS AU NUMÉRIQUE AVEC L'OIF</div>
+    <div>Marketing numérique – Session de décembre</div>
+  </div>
+
+  <table class="report-layout">
+    <thead>
+      <tr><td><div class="header-space">&nbsp;</div></td></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>
+          ${logoBlock}
+          ${bodyHtml}
+        </td>
+      </tr>
+    </tbody>
+    <tfoot>
+      <tr><td><div class="footer-space">&nbsp;</div></td></tr>
+    </tfoot>
+  </table>
 </body>
 </html>`;
 }
@@ -356,6 +399,13 @@ function generatePdf(htmlPath, pdfPath) {
 // ---------------------------------------------------------------------------
 
 function main() {
+  mainAsync().catch(err => {
+    console.error(err);
+    process.exit(1);
+  });
+}
+
+async function mainAsync() {
   // Parse arguments
   const args = process.argv.slice(2);
   if (args.length === 0 || args.includes('--help') || args.includes('-h')) {
@@ -432,10 +482,10 @@ function main() {
     fs.copyFileSync(inputPath, mdDest);
     console.log(`📝 Markdown copié : ${mdDest}`);
 
-    // Save clean HTML version
-    const htmlDest = path.join(rapportDir, `${inputBasename}.html`);
-    fs.copyFileSync(htmlTempPath, htmlDest);
-    console.log(`📝 HTML stylisé : ${htmlDest}`);
+    // Save Word version (.doc) — HTML format that Word opens natively
+    const docDest = path.join(rapportDir, `${inputBasename}.doc`);
+    fs.copyFileSync(htmlTempPath, docDest);
+    console.log(`📝 Document Word généré : ${docDest}`);
   } else {
     console.error('\n❌ Échec de la génération du PDF.');
     console.log('   Le fichier HTML stylisé est disponible ici :');
