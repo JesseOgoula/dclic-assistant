@@ -24,7 +24,7 @@ Et d'un suivi continu via WhatsApp et mails pour garantir une prise en main effi
 2. Prise en main de la plateforme D-CLIC et visionnage des vidéos de présentation.
 3. Découverte de la Séquence 1 : Introduction au marketing numérique.
 
-**Synthèse de l'achèvement des activités (Statistiques au 04/08) :**
+**Synthèse de l'achèvement des activités (Statistiques au 03/08) :**
 - Lettre d'engagement (Préalable) : 83 / 115 (72%).
 - Séquence 1 (Introduction au marketing numérique) : 32 terminés, 44 en cours, 39 non commencés (Moyenne : 48.2%).
 - Séquence 2 (Découverte des méthodes et outils) : 10 terminés, 11 en cours, 94 non commencés (Moyenne : 13.8%).
