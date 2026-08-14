@@ -345,7 +345,7 @@ function buildFullHtml(bodyHtml, logoBase64) {
 <body>
   <div class="page-footer">
     <div class="page-footer-title">D-CLIC : FORMEZ-VOUS AU NUMÉRIQUE AVEC L'OIF</div>
-    <div>Marketing numérique – Session de décembre</div>
+    <div>Marketing numérique – Session de juillet</div>
   </div>
 
   <table class="report-layout">
