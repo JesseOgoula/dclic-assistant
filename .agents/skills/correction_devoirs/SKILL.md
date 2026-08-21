@@ -14,7 +14,7 @@ Produire une évaluation détaillée avec :
 3. Des conseils pour la suite.
 
 ## Grilles d'évaluation (Grands Points)
-Le tuteur te fournira le contenu du devoir de l'apprenant ainsi que le type de devoir (M2C, M3C, M10A, etc.). Tu devras l'évaluer rigoureusement en appliquant la grille spécifique à chaque devoir. S'il s'agit du M2C, M3C ou M10A, réfère-toi aux grilles détaillées fournies en fin de ce document. Pour les autres devoirs, base-toi sur le contexte global du marketing numérique.
+Le tuteur te fournira le contenu du devoir de l'apprenant ainsi que le type de devoir (M2C, M3C, M10A, M11C, etc.). Tu devras l'évaluer rigoureusement en appliquant la grille spécifique à chaque devoir. S'il s'agit du M2C, M3C, M10A ou M11C, réfère-toi aux grilles détaillées fournies en fin de ce document. Pour les autres devoirs, base-toi sur le contexte global du marketing numérique.
 
 ## Format du Feedback
 Génère toujours la réponse selon ce modèle :
@@ -23,9 +23,9 @@ Génère toujours la réponse selon ce modèle :
 
 **Détail de la notation :**
 
-Pour le **M3C** et le **M10A**, le tableau DOIT inclure une colonne « Éléments observés » qui résume factuellement ce que l'apprenant a écrit et justifie la note attribuée. Cette colonne est **obligatoire** : elle force l'évaluateur à confronter le contenu réel du devoir au barème avant de noter. Pour le **M2C**, le tableau simple (Critère / Note) suffit.
+Pour le **M3C**, le **M10A** et le **M11C**, le tableau DOIT inclure une colonne « Éléments observés » qui résume factuellement ce que l'apprenant a écrit et justifie la note attribuée. Cette colonne est **obligatoire** : elle force l'évaluateur à confronter le contenu réel du devoir au barème avant de noter. Pour le **M2C**, le tableau simple (Critère / Note) suffit.
 
-*Format M3C et M10A (obligatoire) :*
+*Format M3C, M10A et M11C (obligatoire) :*
 | Critère | Éléments observés | Note |
 | --- | --- | --- |
 | [Critère 1] | [Résumé factuel du contenu de l'apprenant + justification de la note] | [x] / [max] |
@@ -51,7 +51,7 @@ Pour le **M3C** et le **M10A**, le tableau DOIT inclure une colonne « Élément
 Ton tuteur D-CLIC"
 
 ## Instructions
-1. Analyse le contenu du devoir fourni et identifie s'il s'agit du devoir M2C, M3C ou M10A.
+1. Analyse le contenu du devoir fourni et identifie s'il s'agit du devoir M2C, M3C, M10A ou M11C.
 2. Applique le barème de la grille d'évaluation correspondante de manière **stricte**, critère par critère. Affiche le détail de la notation dans le tableau prévu à cet effet.
 3. Rédige le message de correction en respectant scrupuleusement la limite de 2 à 3 lignes maximum, en allant à l'essentiel (sauf pour les notes < 10 où tu peux utiliser les pistes de correction individuelle pour détailler davantage).
 
@@ -106,7 +106,7 @@ Les règles suivantes s'appliquent **obligatoirement** pour chaque critère du M
 
 ---
 
-## ANNEXE : GRILLES D'ÉVALUATION M2C, M3C ET M10A
+## ANNEXE : GRILLES D'ÉVALUATION M2C, M3C, M10A ET M11C
 
 ### GRILLE M2C
 **Correction devoir séquence 1 M2C - Expression personnelle sur les métiers du marketing numérique**
@@ -215,6 +215,19 @@ Pour les devoirs ayant obtenu une note < 10, le tuteur effectue une correction p
 
 ---
 
+### CONSIGNE OFFICIELLE DU DEVOIR M10A
+
+> **Entraînement à la rédaction web**
+> 
+> Choisissez parmi les thèmes suivants :
+> - Une nouvelle application pour gérer ses courses en ligne
+> - Un musée qui veut mettre en avant sa nouvelle collection
+> - Une administration qui veut expliquer la prochaine campagne de collecte d'impôts
+> 
+> Rédigez un article de 2000 signes respectant les codes de la rédaction web.
+
+---
+
 ### GRILLE M10A
 **Corrections devoir M10A - Principes de rédaction web**
 
@@ -247,3 +260,39 @@ Pour les devoirs ayant obtenu une note < 10, le tuteur effectue une correction p
 - *Contenu pauvre ou hors sujet* (Peu d'informations utiles, aucune valeur ajoutée) : Poser la question : "Qu'apprend le lecteur en lisant ton article ?". Proposer une mini-recherche ou des exemples concrets à intégrer.
 - *SEO non pris en compte* (Aucun mot-clé apparent, ni effort d'optimisation) : Identifier ensemble 2 ou 3 mots-clés liés au sujet choisi. Demander à les intégrer naturellement dans le titre, les sous-titres et le corps du texte.
 - *Fautes nombreuses / style peu fluide* (Orthographe très défaillante, phrases incomplètes ou mal construites) : Suggérer un outil comme Scribens / Antidote. Faire une relecture guidée (1 paragraphe à corriger ensemble). Proposer un exercice de reformulation simple.
+
+---
+
+### CONSIGNE OFFICIELLE DU DEVOIR M11C
+
+> **Consigne** : Dans ce devoir, vous devez analyser chacun des tableaux de suivi présentés dans la documentation ci-dessus puis réaliser une analyse croisée. A l'issue de ces observations, formulez vos recommandations pour la prochaine campagne.
+> 
+> Déposer ici votre rapport qui doit faire une page A4 maximum puis consulter la correction proposée. Vous ne devez pas utiliser l'IA pour produire ce devoir.
+
+---
+
+### GRILLE M11C
+**Corrections devoir M11C - Production d'un rapport**
+
+Cette grille permet de déterminer une note sur 20.
+
+| Critère | Éléments évalués | Pts | Détails d'évaluation |
+| --- | --- | --- | --- |
+| 1. Respect de la consigne | Analyse de chaque tableau + analyse croisée + recommandations | /4 | 0 = devoir hors sujet<br>2 = partiel (manque un des trois éléments)<br>4 = consigne parfaitement suivie |
+| 2. Qualité de l'analyse individuelle des tableaux | Lecture pertinente des données, mise en évidence des points clés de chaque tableau<br>Capacité à faire des liens entre les tableaux pour extraire des tendances globales | /4 | 0 = données mal interprétées, aucune corrélation<br>2 = lecture basique, quelques liens identifiés<br>4 = analyse détaillée, pertinente et structurée, analyse croisée pertinente et bien formulée |
+| 3. Pertinence des recommandations | Recommandations concrètes, réalistes, en lien direct avec les constats | /4 | 0 = recommandations hors contexte<br>2 = recommandations vagues<br>4 = claires, opérationnelles et argumentées |
+| 4. Clarté de l'argumentation | Justification logique des choix et conseils, ton professionnel | /4 | 0 = raisonnement flou<br>2 = partiellement argumenté<br>4 = raisonnement rigoureux et convaincant |
+| 5. Présentation et expression écrite | Structure du devoir (titres, paragraphes), orthographe, lisibilité | /4 | 0 = texte désorganisé ou fautes fréquentes<br>2 = lisible mais perfectible<br>4 = présentation claire, sans faute majeure |
+
+**Propositions de commentaires (M11C) :**
+- **15 à 20 (Très satisfaisant à excellent)** : Analyse très rigoureuse. Vous avez su interpréter chaque tableau de manière fine, croiser les données avec pertinence et formuler des recommandations concrètes et bien ciblées. Votre travail est complet et professionnel. L’ensemble est structuré, fluide, et la logique d’analyse est claire. Vos conseils sont directement exploitables par l’entreprise. Vous avez fait un bon travail d’analyse stratégique, vous comprenez bien les indicateurs marketing.
+- **10 à 14 (Acceptable à satisfaisant)** : Une base solide, mais certaines interprétations mériteraient d’être affinées ou mieux justifiées. L’analyse est correcte dans l’ensemble, mais manque parfois de précision ou de lien entre les tableaux. Vous avez bien compris les enjeux, mais les recommandations restent trop générales ou peu exploitables.
+
+**Correction individuelle (< 10) :**
+Pour les devoirs ayant obtenu une note < 10, le tuteur effectue une correction plus personnalisée en s’aidant des pistes suivantes :
+- *Consigne incomplète* (Analyse absente d’un ou plusieurs tableaux ; pas d’analyse croisée ; pas de recommandations) : Reprendre les 3 étapes demandées : 1) lecture de chaque tableau, 2) analyse croisée, 3) recommandations concrètes. Utiliser un plan en 3 parties clairement identifiées.
+- *Lecture incorrecte des données* (Mauvaise interprétation des chiffres ex: taux ou variations, données citées sans analyse) : Reprendre la définition des indicateurs clés (CTR, taux de conversion, coût par clic…). Demander une justification simple pour chaque chiffre clé cité.
+- *Aucune ou mauvaise analyse croisée* (Les tableaux sont analysés de façon isolée, sans mise en relation) : Demander : Que nous disent ces tableaux ensemble ? Proposer un tableau de synthèse comparatif simple à construire.
+- *Recommandations floues ou déconnectées* (Conseils trop vagues "améliorer la campagne", sans lien avec les observations) : Faire reformuler chaque recommandation en commençant par : "Car j’ai observé que...". Demander 3 actions concrètes, ciblées, réalisables.
+- *Pas de raisonnement stratégique* (Aucune logique ou justification des choix proposés) : Proposer un modèle simple : observation > impact > recommandation.
+- *Texte confus ou mal structuré* (Paragraphes désorganisés, vocabulaire imprécis) : Suggérer un plan type (par tableau / puis croisement / puis recommandations). Inviter à relire avec un correcteur ou un pair pour reformuler les phrases.
