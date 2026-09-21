@@ -242,13 +242,14 @@ def scan_and_sync():
             if not phase_entry.get("status") or "Non soumis" in phase_entry.get("status"):
                 phase_entry["status"] = "✅ Soumis" if phase == "entrainement" else "📥 Restitution déposée"
 
+    MOODLE_V1_IDS = ["desc", "strat", "gest", "tdb"]
     total_learners = len(learners)
     v1_full_count = 0
     v2_submitted_count = 0
     category_counts = {"green": 0, "yellow": 0, "red": 0}
 
     for l in learners:
-        v1_count = sum(1 for d in l["deliverables"].values() if d.get("entrainement", {}).get("submitted"))
+        v1_count = sum(1 for did in MOODLE_V1_IDS if l["deliverables"].get(did, {}).get("entrainement", {}).get("submitted"))
         v2_count = sum(1 for d in l["deliverables"].values() if d.get("final", {}).get("submitted"))
         
         if v1_count >= 4:
@@ -256,7 +257,7 @@ def scan_and_sync():
             l["category_label"] = f"Complet ({v1_count}/4 livrables)"
             category_counts["green"] += 1
             v1_full_count += 1
-        elif v1_count >= 3:
+        elif v1_count >= 2:
             l["category"] = "yellow"
             l["category_label"] = f"Partiel ({v1_count}/4 livrables)"
             category_counts["yellow"] += 1
@@ -268,6 +269,18 @@ def scan_and_sync():
         if v2_count > 0:
             v2_submitted_count += 1
 
+    deliverables_stats = {}
+    for d_def in DELIVERABLES_DEF:
+        d_id = d_def["id"]
+        v1_subs = sum(1 for l in learners if l["deliverables"].get(d_id, {}).get("entrainement", {}).get("submitted"))
+        v2_subs = sum(1 for l in learners if l["deliverables"].get(d_id, {}).get("final", {}).get("submitted"))
+        deliverables_stats[d_id] = {
+            "v1_submitted": v1_subs,
+            "v1_rate": round((v1_subs / total_learners) * 100, 1),
+            "v2_submitted": v2_subs,
+            "v2_rate": round((v2_subs / total_learners) * 100, 1)
+        }
+
     stats = {
         "total_learners": total_learners,
         "v1_completed": v1_full_count,
@@ -275,6 +288,7 @@ def scan_and_sync():
         "v2_submitted": v2_submitted_count,
         "v2_rate": round((v2_submitted_count / total_learners) * 100, 1) if total_learners else 0,
         "categories": category_counts,
+        "deliverables_stats": deliverables_stats,
         "last_updated": datetime.now().isoformat()
     }
 
