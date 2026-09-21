@@ -42,40 +42,53 @@ Le tuteur t'indiquera le type de livrable soumis. Le Projet Professionnel compre
 
 ## Workflow de Correction Incrémentale & Mise à Jour de la Plateforme
 
-Quand le tuteur exporte de nouveaux dossiers d'apprenants depuis Moodle et les dépose dans le dossier `PP/` :
+Quand le tuteur exporte de nouveaux dossiers d'apprenants depuis Moodle et les dépose dans les répertoires `PP/` ou `CPP/` :
 
 ### 1. Dépôt des Fichiers par le Tuteur
-Le tuteur télécharge depuis Moodle les archives de soumission et extrait les dossiers des apprenants dans le sous-dossier correspondant sous `PP/` :
-- `PP/MN_072026-Description du projet-G1_MN_072026-7772/` (Description)
-- `PP/MN_072026-Document de stratégie marketing - Livrable entraînement-G1_MN_072026-7773/` (Stratégie PP1 - Entraînement)
-- `PP/MN_072026-Document de gestion de projets - Livrable entraînement-G1_MN_072026-7774/` (Gestion de Projet & Budget PP2 - Entraînement)
-- `PP/MN_072026-Tableau de bord - Livrable entraînement-G1_MN_072026-7776/` (Tableau de bord PP4 - Entraînement)
-- *(ainsi que les sous-dossiers équivalents pour les livrables finaux notés V2)*.
+Le tuteur télécharge depuis Moodle les archives de soumission et extrait les dossiers des apprenants dans le sous-dossier correspondant sous `PP/` ou `CPP/` :
+- `PP/` ou `CPP/` : dossiers pour chaque livrable (ex : Description, Stratégie marketing PP1, Gestion de projet & Budget PP2, Contenu PP3, Tableau de bord PP4, Restitutions finales V2).
+- À l'intérieur de chaque livrable, il y a les dossiers individuels des apprenants.
+- **Prise en compte dynamique des effectifs** : Tous les apprenants n'ont pas encore déposé leurs devoirs. Au fur et à mesure des dépôts, de nouveaux apprenants non répertoriés initialement apparaîtront dans les dossiers. Le système les intègre automatiquement sans intervention humaine.
 
-### 2. Analyse Différentielle & Évaluation Incrémentale
-L'agent s'appuie sur le fichier d'état persistant `pp_evaluations_state.json` à la racine pour :
-1. Détecter automatiquement ce qui a déjà été analysé vs ce qui vient d'être déposé.
-2. Évaluer uniquement les nouveaux livrables ou apprenants selon les grilles ci-dessous.
-3. Consigner les évaluations diagnostiques (V1) ou sommatives notées (V2).
+### 2. Auto-Découverte, Analyse Différentielle & Évaluation Incrémentale
+L'agent et le script de synchronisation s'appuient sur `pp_evaluations_state.json` pour :
+1. **Auto-détecter les nouveaux apprenants** : Si un dossier ne correspond à aucun apprenant existant, un nouveau profil est créé dynamiquement (nom, prénom, nouvel ID séquentiel, projet extrait des fichiers, structure complète des 6 livrables).
+2. **Détecter les nouveaux livrables déposés** vs ce qui a déjà été évalué.
+3. **Évaluer automatiquement les nouveaux travaux** selon les grilles pédagogiques (diagnostic formatif V1 sans note ou grille sommative notée V2).
 
-### 3. Compilation Automatique pour la Plateforme Web
-L'agent exécute le script de synchronisation incrémentale :
+### 3. Exécution de la Synchronisation
+L'agent lance le script automatisé :
 ```bash
 python DclicAssistant/scripts/sync_pp_evaluations.py
 ```
 Ce script :
-- Scanne tous les dossiers Moodle de `PP/`.
-- Fusionne les données avec `pp_evaluations_state.json`.
+- Scanne les dossiers `PP/` et `CPP/`.
+- Auto-enregistre les nouveaux apprenants et leurs fichiers.
+- Génère les commentaires et diagnostics pédagogiques manquants.
+- Recalcule dynamiquement les taux de complétude, effectifs totaux et catégories (vert/jaune/rouge).
 - Génère le fichier consolidé : `DclicApp/frontend/src/data/pp_evaluations.json`.
 
-### 4. Déploiement Direct sur la Plateforme via Git
-Pour que la plateforme en production reflète les dernières évaluations :
+### 4. Règle Fondamentale : AUCUNE Inspection par Navigateur
+> [!IMPORTANT]
+> **Pas d'utilisation du navigateur** : L'agent ne doit **PAS** ouvrir de session navigateur ni lancer de sous-agent de navigation (`browser_subagent`). 
+> Il vérifie uniquement de façon programmatique (intégrité des fichiers JSON, exécution propre du script, build TypeScript/Vite si nécessaire).
+
+### 5. Poussée Automatique vers GitHub
+Une fois la vérification programmatique effectuée, l'agent pousse immédiatement les modifications :
 ```bash
-git add DclicApp/frontend/src/data/pp_evaluations.json pp_evaluations_state.json
-git commit -m "chore(pp): mise a jour des evaluations du Projet Professionnel"
+cd DclicApp
+git add frontend/src/data/pp_evaluations.json frontend/src/components/Layout.tsx frontend/src/pages/ProgramSelector.tsx
+git commit -m "chore(pp): mise a jour des evaluations et nouveaux apprenants"
 git push origin main
 ```
-La plateforme se met à jour immédiatement.
+La plateforme en production (Render / Vercel / GitHub Pages) se déploie alors automatiquement.
+
+### 6. Rapport et Walkthrough Direct
+Dès que les modifications sont poussées, l'agent rédige/met à jour directement le fichier `walkthrough.md` pour détailler au tuteur :
+- Les nouveaux apprenants découverts et intégrés,
+- Les livrables actualisés et les diagnostics attribués,
+- Les statistiques globales actualisées de la cohorte,
+- Le statut du déploiement Git.
 
 ---
 
