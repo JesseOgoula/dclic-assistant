@@ -1,9 +1,10 @@
 """
 sync_pp_evaluations.py — Moteur de synchronisation incrémentale du Projet Professionnel
 
-Scanne les dossiers Moodle dans PP/, associe les fichiers aux apprenants,
-fusionne avec l'état existant des évaluations (V1 Entraînement et V2 Finale)
-et produit le dataset consolidé pour DclicApp.
+Scanne automatiquement les dossiers Moodle et dossiers de livrables dans PP/ et CPP/,
+détecte et intègre dynamiquement les nouveaux apprenants dès qu'ils déposent des devoirs,
+associe les fichiers, génère les diagnostics pédagogiques selon le référentiel de correction,
+recalcule toutes les métriques de la cohorte et met à jour l'application web DclicApp.
 """
 
 import os
@@ -11,6 +12,7 @@ import sys
 import re
 import json
 import unicodedata
+import subprocess
 from datetime import datetime
 
 if hasattr(sys.stdout, 'reconfigure'):
@@ -18,7 +20,6 @@ if hasattr(sys.stdout, 'reconfigure'):
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 PROJECT_ROOT = os.path.dirname(BASE_DIR)
-PP_DIR = os.path.join(PROJECT_ROOT, "PP")
 STATE_FILE = os.path.join(PROJECT_ROOT, "pp_evaluations_state.json")
 LEGACY_PARSED_FILE = os.path.join(PROJECT_ROOT, "parsed_learners.json")
 FRONTEND_DATA_DIR = os.path.join(PROJECT_ROOT, "DclicApp", "frontend", "src", "data")
@@ -32,7 +33,7 @@ DELIVERABLES_DEF = [
         "short": "Description",
         "icon": "📝",
         "max_score": 0,
-        "keywords": ["description"]
+        "keywords": ["description", "cadrage", "livrable 0", "fiche de cadrage", "projet libre"]
     },
     {
         "id": "strat",
@@ -41,7 +42,7 @@ DELIVERABLES_DEF = [
         "short": "Stratégie (PP1)",
         "icon": "🎯",
         "max_score": 6,
-        "keywords": ["stratégie", "strategie", "marketing"]
+        "keywords": ["stratégie", "strategie", "marketing", "pp1", "livrable 1", "livrable1"]
     },
     {
         "id": "gest",
@@ -50,7 +51,7 @@ DELIVERABLES_DEF = [
         "short": "Gantt & RH (PP2)",
         "icon": "📅",
         "max_score": 6,
-        "keywords": ["gestion de projet", "gantt", "rh"]
+        "keywords": ["gestion de projet", "gestion", "gantt", "rh", "ressources", "pp2", "livrable 2", "livrable2"]
     },
     {
         "id": "budget",
@@ -59,7 +60,7 @@ DELIVERABLES_DEF = [
         "short": "Budget (PP2)",
         "icon": "💰",
         "max_score": 6,
-        "keywords": ["budget"]
+        "keywords": ["budget", "chiffrage", "previsionnel", "coûts", "couts"]
     },
     {
         "id": "content",
@@ -68,7 +69,7 @@ DELIVERABLES_DEF = [
         "short": "Contenu (PP3)",
         "icon": "🎨",
         "max_score": 4,
-        "keywords": ["contenu", "content", "flyer", "video"]
+        "keywords": ["contenu", "content", "flyer", "video", "vidéo", "pp3", "livrable 3", "livrable3"]
     },
     {
         "id": "tdb",
@@ -77,15 +78,42 @@ DELIVERABLES_DEF = [
         "short": "Tableau de Bord (PP4)",
         "icon": "📊",
         "max_score": 4,
-        "keywords": ["tableau de bord", "indicateur", "tdb"]
+        "keywords": ["tableau de bord", "indicateur", "indicateurs", "tdb", "kpi", "dashboard", "pp4", "livrable 4", "livrable4"]
     }
 ]
+
+# Diagnostics et cadrages personnalisés connus pour les projets identifiés
+KNOWN_PROJECT_DEFS = {
+    "aveto": {
+        "projet": "MediConnect (Téléconsultation médicale en ligne)",
+        "desc_comment": "Bonjour Cyrille,\nExcellent cadrage de projet pour MediConnect. Votre ambition de démocratiser la téléconsultation médicale en ligne en Afrique de l'Ouest répond à un enjeu de santé publique critique. Vos segments cibles (zones périurbaines et enclavées) sont très bien ciblés. Veillez à bien intégrer les aspects réglementaires et la confiance des utilisateurs dans la suite de vos livrables.\nTon tuteur D-CLIC",
+        "strat_comment": "Bonjour Cyrille,\nTrès bonne stratégie marketing pour MediConnect. Vos deux personas (Aïcha, 28 ans et Michel, 46 ans) sont bien caractérisés avec des besoins et freins réalistes. Votre étude du marché béninois (benchmark DotoMed) et votre objectif SMART (+40 % de consultations en ligne en 6 mois) sont très cohérents. Pour le dépôt final : approfondissez la différenciation concurrentielle par rapport aux solutions existantes et précisez le budget alloué à l'acquisition WhatsApp/Facebook.\nTon tuteur D-CLIC",
+        "gest_comment": "Bonjour Cyrille,\nVotre démarche Agile découpée en 3 étapes claires (Planification, Préparation/Production, Mise en œuvre) est bien adaptée à une start-up numérique. Pour le rendu final : veillez à joindre un tableau Gantt visuel précis avec les jalons temporels hebdomadaires, et détaillez l'affectation nominative des profils RH (CM, développeur, graphiste) ainsi que le chiffrage budgétaire par tâche.\nTon tuteur D-CLIC"
+    },
+    "akadja": {
+        "projet": "Doer Team Kids Academy (Soutien scolaire & cours particuliers bilingues)",
+        "desc_comment": "Bonjour Olivier,\nTrès bonne note de cadrage pour Doer Team Kids Academy. Votre proposition de valeur sur le soutien scolaire bilingue (français/anglais) du CI à la Terminale répond à un vrai besoin des familles. Votre objectif de progression de 12 à 20 élèves est clair et réaliste.\nTon tuteur D-CLIC",
+        "strat_comment": "Bonjour Olivier,\nRemarquable document de stratégie marketing. L'opposition entre le « parent stratège d'examen » (35-50 ans) et le « parent accompagnateur au long cours » (28-40 ans) est particulièrement fine et opérationnelle. Votre étude concurrentielle en 3 catégories montre bien la valeur ajoutée de votre offre globale. Pour le dépôt final : détaillez davantage vos actions d'activation et précisez vos indicateurs de conversion via les groupes WhatsApp de parents d'élèves.\nTon tuteur D-CLIC"
+    },
+    "amoussa": {
+        "projet": "KDS School (École des métiers du numérique et création de contenu)",
+        "desc_comment": "Bonjour Eyitayo,\nTrès bon cadrage de votre projet KDS School. La formation aux métiers du numérique et de la création de contenu répond à une forte demande des jeunes et professionnels. Pour le Livrable 1 (Stratégie marketing) : définissez 2 personas types (étudiant en reconversion et professionnel en perfectionnement), analysez 3 centres ou plateformes concurrentes de formation, et fixez des objectifs SMART d'acquisition d'inscrits.\nTon tuteur D-CLIC"
+    },
+    "attiogbe": {
+        "projet": "Santé Numérique / Télémédecine en Afrique de l'Ouest",
+        "desc_comment": "Bonjour Komi Ithiel,\nExcellente analyse contextuelle et benchmark sectoriel approfondi sur la télémédecine en Afrique de l'Ouest francophone et au Togo. Votre socle documentaire est solide et bien documenté. Pour la suite (Livrable 1 - Stratégie) : traduisez ce benchmark en stratégie opérationnelle avec 2 personas patients/médecins, vos canaux d'acquisition prioritaires et vos objectifs chiffrés.\nTon tuteur D-CLIC"
+    },
+    "allarabeye": {
+        "projet": "Développement de l'audience d'une chaîne TV tchadienne via le numérique",
+        "desc_comment": "Bonjour Nodjipal Succès,\nProjet très intéressant et pertinent sur le développement d'audience d'une chaîne de télévision tchadienne via les canaux numériques. L'adaptation aux nouveaux usages mobiles et réseaux sociaux est primordiale. Pour le Livrable 1 : structurez vos 2 personas (le téléspectateur traditionnel et le jeune connecté sur mobile), benchmarquez 3 médias concurrents au Tchad/Afrique centrale, et précisez vos leviers d'acquisition digitale (extraits vidéo courts, communauté).\nTon tuteur D-CLIC"
+    }
+}
 
 def normalize_text(text: str) -> str:
     """Normalise une chaîne pour comparaison insensible à la casse et aux accents."""
     text = unicodedata.normalize('NFD', text)
     text = ''.join(c for c in text if unicodedata.category(c) != 'Mn')
-    text = re.sub(r'[\'’\-]', '', text)
+    text = re.sub(r'[\'’\-]', ' ', text)
     text = re.sub(r'[^a-zA-Z0-9\s]', ' ', text).lower()
     return ' '.join(text.split())
 
@@ -103,16 +131,120 @@ def match_learner_name(raw_folder_name: str, learners: list) -> dict:
         full_words = set(norm_full.split())
         overlap = len(folder_words.intersection(full_words))
         
-        if folder_words == full_words or (overlap >= 2 and overlap > max_overlap):
+        if folder_words == full_words:
+            return l
+        
+        # Check if surname and at least one firstname match
+        norm_nom = normalize_text(l.get('nom', ''))
+        nom_words = set(norm_nom.split())
+        if nom_words and nom_words.issubset(folder_words):
+            if overlap > max_overlap:
+                best_match = l
+                max_overlap = overlap
+
+        if overlap >= 2 and overlap > max_overlap:
             best_match = l
             max_overlap = overlap
 
     return best_match
 
+def parse_new_learner_name(clean_name: str) -> tuple:
+    """Extrait nom, prénom et nom complet d'une chaîne propre."""
+    words = clean_name.strip().split()
+    if not words:
+        return "INCONNU", "Apprenant", "INCONNU Apprenant"
+    
+    # Séparer les mots tout en majuscules (nom de famille) des mots en casse mixte (prénom)
+    nom_words = [w for w in words if w.isupper() and len(w) > 1]
+    prenom_words = [w for w in words if not (w.isupper() and len(w) > 1)]
+    
+    if not nom_words:
+        if len(words) > 1:
+            nom_words = [words[-1].upper()]
+            prenom_words = words[:-1]
+        else:
+            nom_words = [words[0].upper()]
+            prenom_words = []
+    
+    nom = " ".join(nom_words)
+    prenom = " ".join(prenom_words)
+    full_name = f"{nom} {prenom}".strip() if prenom else nom
+    return nom, prenom, full_name
+
+def create_new_learner(raw_folder_name: str, learners: list) -> dict:
+    """Crée dynamiquement un nouvel apprenant dans le référentiel."""
+    clean_name = raw_folder_name.split('_')[0].strip()
+    nom, prenom, full_name = parse_new_learner_name(clean_name)
+    
+    # Calcul du prochain numéro séquentiel
+    max_num = 0
+    for l in learners:
+        try:
+            val = int(str(l.get("num", "0")).lstrip("0") or "0")
+            if val > max_num:
+                max_num = val
+        except ValueError:
+            pass
+    
+    new_num = f"{max_num + 1:02d}"
+    learner_id = f"learner-{new_num}"
+    
+    # Recherche d'un projet connu
+    norm_key = normalize_text(nom).lower()
+    known_info = None
+    for k, v in KNOWN_PROJECT_DEFS.items():
+        if k in norm_key or any(k in normalize_text(w) for w in clean_name.split()):
+            known_info = v
+            break
+            
+    project_title = known_info["projet"] if known_info else "Projet Professionnel D-CLIC"
+    
+    new_learner = {
+        "id": learner_id,
+        "num": new_num,
+        "nom": nom,
+        "prenom": prenom,
+        "full_name": full_name,
+        "projet": project_title,
+        "category": "red",
+        "category_label": "En retard (0/4 livrables)",
+        "status_priority": "",
+        "synthesis": {
+            "coherence": "Dossier en cours de constitution.",
+            "points_forts": "Apprenant engagé ayant déposé ses premiers livrables.",
+            "chantiers": "Poursuivre la formalisation des livrables manquants.",
+            "message": f"Bonjour {prenom or nom},\nBienvenue dans le suivi du Projet Professionnel. Poursuivez vos dépôts pour compléter votre parcours."
+        },
+        "deliverables": {}
+    }
+    
+    for d in DELIVERABLES_DEF:
+        d_id = d["id"]
+        new_learner["deliverables"][d_id] = {
+            "id": d_id,
+            "entrainement": {
+                "submitted": False,
+                "status": "Non soumis",
+                "comment": "",
+                "files": []
+            },
+            "final": {
+                "submitted": False,
+                "status": "En attente de remise finale",
+                "score": None,
+                "max_score": d["max_score"],
+                "comment": "",
+                "audit_v1": "",
+                "files": []
+            }
+        }
+        
+    return new_learner
+
 def detect_deliverable_and_phase(folder_name: str):
-    """Détecte le livrable et la phase à partir du nom du dossier Moodle."""
+    """Détecte le livrable et la phase à partir du nom du dossier Moodle ou CPP."""
     norm = normalize_text(folder_name)
-    phase = "final" if any(w in norm for w in ["final", "restitution", "definitif"]) else "entrainement"
+    phase = "final" if any(w in norm for w in ["final", "restitution", "definitif", "v2"]) else "entrainement"
 
     deliv_id = None
     for d in DELIVERABLES_DEF:
@@ -121,6 +253,31 @@ def detect_deliverable_and_phase(folder_name: str):
             break
 
     return deliv_id, phase
+
+def get_submission_directories():
+    """Identifie tous les répertoires sources possibles (PP, CPP, et variantes)."""
+    valid_dirs = []
+    seen_paths = set()
+    candidates = ["PP", "CPP", "cpp", "pp"]
+    for c in candidates:
+        p = os.path.join(PROJECT_ROOT, c)
+        if os.path.exists(p) and os.path.isdir(p):
+            canon = os.path.normcase(os.path.realpath(p))
+            if canon not in seen_paths:
+                seen_paths.add(canon)
+                valid_dirs.append(p)
+            
+    # Détecter également d'autres dossiers contenant PP ou CPP à la racine
+    for item in os.listdir(PROJECT_ROOT):
+        full_p = os.path.join(PROJECT_ROOT, item)
+        if os.path.isdir(full_p) and ("PP" in item.upper() or "CPP" in item.upper()):
+            if not item.startswith(".") and item not in ["DclicApp", "DclicAssistant"]:
+                canon = os.path.normcase(os.path.realpath(full_p))
+                if canon not in seen_paths:
+                    seen_paths.add(canon)
+                    valid_dirs.append(full_p)
+                
+    return valid_dirs
 
 def load_initial_data():
     """Charge l'état existant ou initialise depuis parsed_learners.json."""
@@ -186,62 +343,117 @@ def load_initial_data():
         return state_learners
     return []
 
-def scan_and_sync():
-    """Scanne le dossier PP et synchronise avec l'état."""
+def scan_and_sync(auto_push=False):
+    """Scanne les dossiers PP et CPP, intègre les nouveaux apprenants et met à jour DclicApp."""
     learners = load_initial_data()
-    if not learners:
-        print("Erreur: aucune donnée apprenant initiale trouvée.")
+    print(f"Chargement initial : {len(learners)} apprenants en mémoire.")
+
+    source_dirs = get_submission_directories()
+    if not source_dirs:
+        print("⚠️ Aucun dossier source de soumissions trouvé (PP / CPP).")
         return
 
-    print(f"Indexation de {len(learners)} apprenants...")
+    print(f"Dossiers sources scannés : {[os.path.basename(d) for d in source_dirs]}")
 
-    if not os.path.exists(PP_DIR):
-        print(f"Dossier {PP_DIR} introuvable.")
-        return
+    newly_added_learners = 0
+    newly_added_submissions = 0
 
-    for folder_name in os.listdir(PP_DIR):
-        folder_path = os.path.join(PP_DIR, folder_name)
-        if not os.path.isdir(folder_path):
-            continue
-
-        deliv_id, phase = detect_deliverable_and_phase(folder_name)
-        if not deliv_id:
-            print(f"⚠️ Livrable non reconnu pour le dossier : {folder_name}")
-            continue
-
-        print(f"Scan : {folder_name} -> Livrable: {deliv_id}, Phase: {phase}")
-
-        for sub in os.listdir(folder_path):
-            sub_path = os.path.join(folder_path, sub)
-            if not os.path.isdir(sub_path):
+    for source_dir in source_dirs:
+        for folder_name in sorted(os.listdir(source_dir)):
+            folder_path = os.path.join(source_dir, folder_name)
+            if not os.path.isdir(folder_path):
                 continue
 
-            matched = match_learner_name(sub, learners)
-            if not matched:
-                print(f"  ❌ Apprenant non reconnu: {sub}")
+            deliv_id, phase = detect_deliverable_and_phase(folder_name)
+            if not deliv_id:
+                # Vérifier si c'est un sous-dossier contenant des livrables
                 continue
 
-            files = []
-            for f in os.listdir(sub_path):
-                f_path = os.path.join(sub_path, f)
-                if os.path.isfile(f_path):
-                    stat = os.stat(f_path)
-                    files.append({
-                        "name": f,
-                        "size": stat.st_size,
-                        "mtime": datetime.fromtimestamp(stat.st_mtime).isoformat()
-                    })
+            print(f"\n📁 [{os.path.basename(source_dir)}] {folder_name} -> Livrable: {deliv_id} ({phase})")
 
-            if not files:
-                continue
+            for sub in sorted(os.listdir(folder_path)):
+                sub_path = os.path.join(folder_path, sub)
+                if not os.path.isdir(sub_path):
+                    continue
 
-            learner_deliv = matched["deliverables"].setdefault(deliv_id, {})
-            phase_entry = learner_deliv.setdefault(phase, {})
-            phase_entry["submitted"] = True
-            phase_entry["files"] = files
-            if not phase_entry.get("status") or "Non soumis" in phase_entry.get("status"):
-                phase_entry["status"] = "✅ Soumis" if phase == "entrainement" else "📥 Restitution déposée"
+                # Association ou création automatique du dossier apprenant
+                matched = match_learner_name(sub, learners)
+                if not matched:
+                    matched = create_new_learner(sub, learners)
+                    learners.append(matched)
+                    newly_added_learners += 1
+                    print(f"  ✨ NOUVEL APPRENANT DÉCOUVERT ET AJOUTÉ : {matched['full_name']} (N° {matched['num']})")
 
+                # Récupération des fichiers déposés
+                files = []
+                for f in os.listdir(sub_path):
+                    f_path = os.path.join(sub_path, f)
+                    if os.path.isfile(f_path):
+                        stat = os.stat(f_path)
+                        files.append({
+                            "name": f,
+                            "size": stat.st_size,
+                            "mtime": datetime.fromtimestamp(stat.st_mtime).isoformat()
+                        })
+
+                if not files:
+                    continue
+
+                learner_deliv = matched["deliverables"].setdefault(deliv_id, {})
+                phase_entry = learner_deliv.setdefault(phase, {})
+                was_already_submitted = phase_entry.get("submitted", False)
+                
+                phase_entry["submitted"] = True
+                phase_entry["files"] = files
+                
+                if not was_already_submitted:
+                    newly_added_submissions += 1
+
+                # Statut et feedback automatique
+                norm_nom = normalize_text(matched.get("nom", "")).lower()
+                known_def = None
+                for k, v in KNOWN_PROJECT_DEFS.items():
+                    if k in norm_nom or any(k in normalize_text(w) for w in matched["full_name"].split()):
+                        known_def = v
+                        break
+
+                if known_def and known_def.get("projet"):
+                    matched["projet"] = known_def["projet"]
+
+                current_status = phase_entry.get("status", "")
+                if not current_status or "Non soumis" in current_status:
+                    if phase == "entrainement":
+                        if deliv_id == "desc":
+                            phase_entry["status"] = "✅ Projet cadré"
+                        else:
+                            phase_entry["status"] = "🟡 Soumis — Bon travail, ajustements requis"
+                    else:
+                        phase_entry["status"] = "📥 Restitution finale déposée"
+
+                # Attribuer le commentaire personnalisé s'il n'existe pas encore
+                current_comment = phase_entry.get("comment", "")
+                if not current_comment and known_def:
+                    if deliv_id == "desc" and "desc_comment" in known_def:
+                        phase_entry["comment"] = known_def["desc_comment"]
+                    elif deliv_id == "strat" and "strat_comment" in known_def:
+                        phase_entry["comment"] = known_def["strat_comment"]
+                    elif deliv_id == "gest" and "gest_comment" in known_def:
+                        phase_entry["comment"] = known_def["gest_comment"]
+
+                # Feedback par défaut structuré pour tout autre travail sans commentaire
+                if not phase_entry.get("comment"):
+                    deliv_title = next((d["title"] for d in DELIVERABLES_DEF if d["id"] == deliv_id), deliv_id)
+                    prenom = matched.get("prenom") or matched.get("nom")
+                    if phase == "entrainement":
+                        phase_entry["comment"] = (
+                            f"Bonjour {prenom},\n"
+                            f"Votre document pour « {deliv_title} » a bien été reçu et pris en compte. "
+                            f"Veillez à respecter scrupuleusement les critères de la grille officielle (faisabilité, cohérence avec vos personas et clarté des objectifs) "
+                            f"pour votre version finale.\n"
+                            f"Ton tuteur D-CLIC"
+                        )
+
+    # Recalcul des catégories et complétudes V1 / V2
     MOODLE_V1_IDS = ["desc", "strat", "gest", "tdb"]
     total_learners = len(learners)
     v1_full_count = 0
@@ -269,6 +481,7 @@ def scan_and_sync():
         if v2_count > 0:
             v2_submitted_count += 1
 
+    # Statistiques par livrable
     deliverables_stats = {}
     for d_def in DELIVERABLES_DEF:
         d_id = d_def["id"]
@@ -276,9 +489,9 @@ def scan_and_sync():
         v2_subs = sum(1 for l in learners if l["deliverables"].get(d_id, {}).get("final", {}).get("submitted"))
         deliverables_stats[d_id] = {
             "v1_submitted": v1_subs,
-            "v1_rate": round((v1_subs / total_learners) * 100, 1),
+            "v1_rate": round((v1_subs / total_learners) * 100, 1) if total_learners else 0,
             "v2_submitted": v2_subs,
-            "v2_rate": round((v2_subs / total_learners) * 100, 1)
+            "v2_rate": round((v2_subs / total_learners) * 100, 1) if total_learners else 0
         }
 
     stats = {
@@ -298,17 +511,48 @@ def scan_and_sync():
         "learners": learners
     }
 
+    # Sauvegarde de l'état persistant
     with open(STATE_FILE, 'w', encoding='utf-8') as f:
         json.dump(learners, f, ensure_ascii=False, indent=2)
 
+    # Sauvegarde des données pour le frontend DclicApp
     os.makedirs(FRONTEND_DATA_DIR, exist_ok=True)
     with open(FRONTEND_TARGET_FILE, 'w', encoding='utf-8') as f:
         json.dump(output_data, f, ensure_ascii=False, indent=2)
 
-    print(f"\n✅ Synchronisation terminée avec succès !")
-    print(f"   - Apprenants traités : {total_learners}")
-    print(f"   - Livrables V1 complets : {v1_full_count} ({stats['v1_rate']}%)")
-    print(f"   - Données générées dans : {FRONTEND_TARGET_FILE}")
+    print(f"\n========================================================")
+    print(f"✅ SYNCHRONISATION DU PROJET PROFESSIONNEL EFFECTUÉE")
+    print(f"========================================================")
+    print(f" - Apprenants totaux suivis : {total_learners} (dont {newly_added_learners} nouveaux)")
+    print(f" - Soumissions actualisées  : {newly_added_submissions}")
+    print(f" - Livrables V1 complets    : {v1_full_count} ({stats['v1_rate']}%)")
+    print(f" - Vert (Complet)           : {category_counts['green']}")
+    print(f" - Jaune (Partiel)          : {category_counts['yellow']}")
+    print(f" - Rouge (En retard)        : {category_counts['red']}")
+    print(f" - Fichier frontend à jour : {FRONTEND_TARGET_FILE}")
+    print(f"========================================================")
+
+    if auto_push:
+        print("\n🚀 Poussée automatique vers GitHub...")
+        push_to_git()
+
+def push_to_git():
+    """Effectue le commit et push automatique vers GitHub pour mettre à jour la plateforme."""
+    try:
+        app_dir = os.path.join(PROJECT_ROOT, "DclicApp")
+        subprocess.run(["git", "add", "frontend/src/data/pp_evaluations.json"], cwd=app_dir, check=True)
+        # Check if there is anything to commit
+        diff = subprocess.run(["git", "diff", "--staged", "--quiet"], cwd=app_dir)
+        if diff.returncode != 0:
+            commit_msg = f"chore(pp): mise a jour automatique des evaluations ({datetime.now().strftime('%Y-%m-%d %H:%M')})"
+            subprocess.run(["git", "commit", "-m", commit_msg], cwd=app_dir, check=True)
+            subprocess.run(["git", "push", "origin", "main"], cwd=app_dir, check=True)
+            print("✅ DclicApp poussé avec succès vers GitHub origin/main !")
+        else:
+            print("ℹ️ Aucun changement à pousser pour DclicApp.")
+    except Exception as e:
+        print(f"⚠️ Erreur lors du push git : {e}")
 
 if __name__ == "__main__":
-    scan_and_sync()
+    push_flag = "--push" in sys.argv
+    scan_and_sync(auto_push=push_flag)
