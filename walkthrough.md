@@ -22,7 +22,12 @@
 3. **Validation Programmatique & Zéro Navigateur** :
    - Conformité totale avec la règle d'interdiction du navigateur.
    - Validation de l'intégrité JSON de `pp_evaluations.json` et de l'état persistant `pp_evaluations_state.json`.
-   - Test de build complet frontend réussi : `npm run build` (`tsc -b && vite build`) validé avec succès en 10.53s.
+   - Test de build complet frontend réussi : `npm run build` (`tsc -b && vite build`) validé avec succès en 4.81s.
+
+4. **Refonte des Commentaires : Règle Zéro Salutation & Zéro Signature** :
+   - Mise à jour du skill [SKILL.md](file:///d:/Project/DCLIC/DclicAssistant/.agents/skills/correction_devoirs/SKILL.md) : interdiction stricte de toute formule d'appel (« Bonjour X ») et de toute signature finale (« Ton tuteur D-CLIC »).
+   - Nettoyage intégral automatique appliqué à l'ensemble des 39 apprenants (245 commentaires et messages de synthèse épurés).
+   - Tous les feedbacks débutent désormais immédiatement par l'évaluation factuelle et pédagogique.
 
 ---
 
