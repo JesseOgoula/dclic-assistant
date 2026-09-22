@@ -106,6 +106,54 @@ KNOWN_PROJECT_DEFS = {
     "allarabeye": {
         "projet": "Développement de l'audience d'une chaîne TV tchadienne via le numérique",
         "desc_comment": "Bonjour Nodjipal Succès,\nProjet très intéressant et pertinent sur le développement d'audience d'une chaîne de télévision tchadienne via les canaux numériques. L'adaptation aux nouveaux usages mobiles et réseaux sociaux est primordiale. Pour le Livrable 1 : structurez vos 2 personas (le téléspectateur traditionnel et le jeune connecté sur mobile), benchmarquez 3 médias concurrents au Tchad/Afrique centrale, et précisez vos leviers d'acquisition digitale (extraits vidéo courts, communauté).\nTon tuteur D-CLIC"
+    },
+    "aka": {
+        "nom": "AKA",
+        "prenom": "Ablan Marie",
+        "full_name": "AKA Ablan Marie",
+        "projet": "Spag'Chaud (Restauration rapide étudiante sur campus — Côte d'Ivoire)",
+        "desc_comment": "Bonjour Ablan Marie,\nTrès belle initiative avec Spag'Chaud. Répondre au besoin des étudiants des campus ivoiriens avec une offre de repas chauds, rapides et abordables est une proposition de valeur forte. Pour le Livrable 1 (Stratégie marketing) : définissez 2 personas d'étudiants types, analysez au moins 3 offres concurrentes sur les campus, et détaillez vos canaux d'acquisition (notamment réseaux sociaux et commande par WhatsApp).\nTon tuteur D-CLIC",
+        "strat_comment": "Bonjour Ablan Marie,\nTrès bon document de stratégie marketing pour Spag'Chaud. Vos personas étudiants sont pertinents et vos canaux de diffusion adaptés à la cible jeune. Pour votre version finale : assurez-vous de bien chiffrer vos objectifs SMART de vente et approfondissez vos actions de fidélisation sur le campus.\nTon tuteur D-CLIC",
+        "synthesis": {
+            "coherence": "Le concept de restauration rapide sur campus est limpide et la stratégie marketing cible adéquatement la communauté estudiantine. Les livrables de gestion de projet (PP2) et tableau de bord (PP4) sont attendus pour boucler le dispositif.",
+            "points_forts": "Projet pragmatique répondant à un besoin quotidien réel, proposition de valeur claire (prix abordable et rapidité).",
+            "chantiers": "- *Sur le fond* : Finaliser le planning Gantt et le budget (PP2), puis concevoir le tableau de bord (PP4).\n  - *Sur la forme* : Maintenir la clarté visuelle et respecter les limites de mots.",
+            "message": "Bonjour Ablan Marie,\nVotre projet Spag'Chaud démarre sur d'excellentes bases marketing. Poursuivez sur cette belle dynamique en structurant vos livrables de gestion de projet et vos indicateurs de suivi.\nTon tuteur D-CLIC"
+        },
+        "status_priority": "🟡 Bon démarrage (Description + Stratégie). Finaliser PP2 (Gantt & Budget) et PP4 (Tableau de bord)."
+    },
+    "adou": {
+        "nom": "ADOU",
+        "prenom": "Sokhna",
+        "full_name": "ADOU Sokhna",
+        "projet": "COSNA Investments (Écoconstruction & Briques de Terre Compressée Stabilisée - BTCS)",
+        "desc_comment": "Bonjour Sokhna,\nExcellent cadrage de projet pour COSNA Investments. Le positionnement sur la construction écologique et les matériaux durables (BTCS) en Afrique de l'Ouest répond à un enjeu d'avenir majeur. Vos cibles (particuliers et promoteurs) sont clairement identifiées.\nTon tuteur D-CLIC",
+        "strat_comment": "Bonjour Sokhna,\nRemarquable stratégie marketing pour COSNA Investments. Vos 2 personas (particulier constructeur et promoteur professionnel) sont bien documentés et le plan d'acquisition digitale valorise parfaitement les atouts écologiques et économiques de votre offre.\nTon tuteur D-CLIC",
+        "gest_comment": "Bonjour Sokhna,\nTrès bonne démarche de gestion de projet avec le planning Gantt et le budget prévisionnel associés. L'organisation des ressources humaines et le chiffrage par phases sont réalistes et bien articulés avec la stratégie marketing.\nTon tuteur D-CLIC",
+        "tdb_comment": "Bonjour Sokhna,\nTableau de bord bien structuré avec des indicateurs de suivi clairs (visibilité digitale, leads qualifiés, conversions). Les métriques choisies permettront un pilotage rigoureux de votre performance commerciale.\nTon tuteur D-CLIC",
+        "synthesis": {
+            "coherence": "Parcours préparatoire V1 complet et exemplaire sur les 4 volets Moodle. L'alignement entre le produit écologique (BTCS), la stratégie d'acquisition, le Gantt/budget et les indicateurs KPIs est parfaitement maîtrisé.",
+            "points_forts": "Dossier très complet et professionnel, maîtrise des enjeux de la construction durable, planning et budget bien modélisés.",
+            "chantiers": "- *Sur le fond* : Produire les supports de communication (PP3 - flyer et vidéo < 1mn30).\n  - *Sur la forme* : Veiller au respect des limites de mots pour le rendu final.",
+            "message": "Bonjour Sokhna,\nToutes mes félicitations pour la complétude et la grande qualité de l'ensemble de vos livrables V1. Vous disposez d'un socle remarquable pour aborder vos créations de contenus (PP3) et viser l'excellence lors de la restitution finale !\nTon tuteur D-CLIC"
+        },
+        "status_priority": "🟢 Parcours V1 complet (4/4). Préparer les créations de contenu (PP3) et la restitution finale."
+    },
+    "aiglo": {
+        "nom": "AIGLO",
+        "prenom": "Sègla Gérald P.",
+        "full_name": "AIGLO Sègla Gérald P.",
+        "projet": "TikTok Prêt-à-Porter (Boutique physique connectée de mode et prêt-à-porter)",
+        "desc_comment": "Bonjour Sègla Gérald,\nConcept très original et stimulant de boutique connectée en milieu rural, alliant point de vente physique et leviers numériques (TikTok, Facebook, Mobile Money). La sélection d'articles tendance répond à une demande locale avérée.\nTon tuteur D-CLIC",
+        "strat_comment": "Bonjour Sègla Gérald,\nBonne ébauche stratégique axée sur la visibilité TikTok. Pour le rendu final : veillez à bien structurer les 2 personas types, à benchmarquer 3 concurrents (boutiques physiques ou en ligne), et à préciser vos mécanismes de conversion et fidélisation en magasin.\nTon tuteur D-CLIC",
+        "gest_comment": "Bonjour Sègla Gérald,\nVotre plan opérationnel pose de bonnes bases. Pour le rendu final : formalisez un planning Gantt clair avec les étapes clés (approvisionnement, création de contenu TikTok, promotions) et détaillez le budget par tâche.\nTon tuteur D-CLIC",
+        "synthesis": {
+            "coherence": "Idée novatrice de commerce connecté en zone semi-rurale. La description, la stratégie et la gestion de projet sont posées. Reste à concevoir le tableau de bord (PP4) pour suivre la conversion magasin/digital.",
+            "points_forts": "Originalité du concept phygital (boutique physique + TikTok), ancrage commercial concret.",
+            "chantiers": "- *Sur le fond* : Élaborer le Tableau de bord (PP4) et produire les contenus promotionnels (PP3).\n  - *Sur la forme* : Structurer le Gantt sous format tabulaire et préciser le budget chiffré.",
+            "message": "Bonjour Sègla Gérald,\nVotre projet phygital TikTok Prêt-à-Porter est très prometteur. Continuez ainsi en finalisant vos indicateurs de performance (PP4) et vos supports de communication (PP3).\nTon tuteur D-CLIC"
+        },
+        "status_priority": "🟡 Bon avancement (3/4 livrables). Concevoir le Tableau de bord (PP4) et les contenus (PP3)."
     }
 }
 
@@ -155,10 +203,15 @@ def parse_new_learner_name(clean_name: str) -> tuple:
         return "INCONNU", "Apprenant", "INCONNU Apprenant"
     
     # Séparer les mots tout en majuscules (nom de famille) des mots en casse mixte (prénom)
-    nom_words = [w for w in words if w.isupper() and len(w) > 1]
-    prenom_words = [w for w in words if not (w.isupper() and len(w) > 1)]
+    # Exclure les abréviations / initiales à une lettre comme 'P.'
+    nom_words = [w for w in words if w.strip('.').isupper() and len(w.strip('.')) > 1]
+    prenom_words = [w for w in words if not (w.strip('.').isupper() and len(w.strip('.')) > 1)]
     
-    if not nom_words:
+    # Si tous les mots sont en majuscules (ex: SOKHNA ADOU)
+    if len(nom_words) > 1 and not prenom_words:
+        prenom_words = [w.capitalize() for w in nom_words[:-1]]
+        nom_words = [nom_words[-1]]
+    elif not nom_words:
         if len(words) > 1:
             nom_words = [words[-1].upper()]
             prenom_words = words[:-1]
@@ -409,16 +462,41 @@ def scan_and_sync(auto_push=False):
                 if not was_already_submitted:
                     newly_added_submissions += 1
 
+                # Détection automatique du budget si présent dans gest
+                if deliv_id == "gest":
+                    has_budget = any("budget" in f["name"].lower() for f in files)
+                    if has_budget:
+                        budget_deliv = matched["deliverables"].setdefault("budget", {})
+                        b_phase = budget_deliv.setdefault(phase, {})
+                        b_phase["submitted"] = True
+                        b_phase["files"] = [f for f in files if "budget" in f["name"].lower()]
+                        if not b_phase.get("status") or "Non soumis" in b_phase.get("status", ""):
+                            b_phase["status"] = "✅ Soumis — Chiffrage budgétaire associé au Gantt"
+                        if not b_phase.get("comment"):
+                            b_phase["comment"] = f"Bonjour {matched.get('prenom') or matched.get('nom')},\nVotre budget prévisionnel intégré aux documents de gestion de projet a bien été pris en compte.\nTon tuteur D-CLIC"
+
                 # Statut et feedback automatique
                 norm_nom = normalize_text(matched.get("nom", "")).lower()
+                norm_prenom = normalize_text(matched.get("prenom", "")).lower()
                 known_def = None
                 for k, v in KNOWN_PROJECT_DEFS.items():
-                    if k in norm_nom or any(k in normalize_text(w) for w in matched["full_name"].split()):
+                    if k in norm_nom or k in norm_prenom or any(k in normalize_text(w) for w in matched["full_name"].split()):
                         known_def = v
                         break
 
-                if known_def and known_def.get("projet"):
-                    matched["projet"] = known_def["projet"]
+                if known_def:
+                    if known_def.get("projet"):
+                        matched["projet"] = known_def["projet"]
+                    if known_def.get("nom"):
+                        matched["nom"] = known_def["nom"]
+                    if known_def.get("prenom"):
+                        matched["prenom"] = known_def["prenom"]
+                    if known_def.get("full_name"):
+                        matched["full_name"] = known_def["full_name"]
+                    if known_def.get("synthesis"):
+                        matched["synthesis"] = known_def["synthesis"]
+                    if known_def.get("status_priority"):
+                        matched["status_priority"] = known_def["status_priority"]
 
                 current_status = phase_entry.get("status", "")
                 if not current_status or "Non soumis" in current_status:
@@ -430,15 +508,18 @@ def scan_and_sync(auto_push=False):
                     else:
                         phase_entry["status"] = "📥 Restitution finale déposée"
 
-                # Attribuer le commentaire personnalisé s'il n'existe pas encore
+                # Attribuer le commentaire personnalisé s'il n'existe pas encore ou s'il était générique
                 current_comment = phase_entry.get("comment", "")
-                if not current_comment and known_def:
+                is_generic_comment = not current_comment or "a bien été reçu et pris en compte" in current_comment
+                if is_generic_comment and known_def:
                     if deliv_id == "desc" and "desc_comment" in known_def:
                         phase_entry["comment"] = known_def["desc_comment"]
                     elif deliv_id == "strat" and "strat_comment" in known_def:
                         phase_entry["comment"] = known_def["strat_comment"]
                     elif deliv_id == "gest" and "gest_comment" in known_def:
                         phase_entry["comment"] = known_def["gest_comment"]
+                    elif deliv_id == "tdb" and "tdb_comment" in known_def:
+                        phase_entry["comment"] = known_def["tdb_comment"]
 
                 # Feedback par défaut structuré pour tout autre travail sans commentaire
                 if not phase_entry.get("comment"):
