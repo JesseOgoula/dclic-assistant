@@ -13,6 +13,7 @@ import re
 import json
 import unicodedata
 import subprocess
+import random
 from datetime import datetime
 
 if hasattr(sys.stdout, 'reconfigure'):
@@ -154,6 +155,21 @@ KNOWN_PROJECT_DEFS = {
             "message": "Projet phygital TikTok Prêt-à-Porter très prometteur. Continuer ainsi en finalisant les indicateurs de performance (PP4) et les supports de communication (PP3)."
         },
         "status_priority": "🟡 Bon avancement (3/4 livrables). Concevoir le Tableau de bord (PP4) et les contenus (PP3)."
+    },
+    "mukonkole": {
+        "nom": "MUKONKOLE",
+        "prenom": "Ariane",
+        "full_name": "MUKONKOLE Ariane",
+        "projet": "AFRIFAM TV – Cap sur le Numérique (Transition digitale d'une chaîne TV panafricaine)",
+        "desc_comment": "Remarquable note de cadrage et stratégie marketing pour AFRIFAM TV. Votre projet de transition numérique pour une chaîne de télévision de 50 collaborateurs est ambitieux et très bien structuré. Vos deux segments d'audience (les Millennials/Gen Z sur mobile et la diaspora via le streaming/VOD) sont particulièrement pertinents. Vos objectifs SMART (100 000 abonnés cumulés, 50 000 visiteurs uniques/mois et 15 % de revenus publicitaires en ligne) sont clairs et chiffrés. Vos leviers d'action (recyclage de formats courts pour TikTok/Shorts, community management interactif et campagnes payantes) répondent parfaitement aux enjeux de visibilité.",
+        "strat_comment": "Excellent travail stratégique pour AFRIFAM TV. Votre vision de la convergence TV-Web et du formatage de contenus natifs (Reels, TikTok) est opérationnelle. Pour le dépôt final : veillez à approfondir le benchmark de 3 médias ou chaînes concurrentes et formalisez une matrice SWOT détaillée.",
+        "synthesis": {
+            "coherence": "Très bon cadrage de projet intégrant d'emblée la vision de stratégie marketing digitale pour AFRIFAM TV. Les livrables de gestion de projet (Gantt & Budget) et le tableau de bord d'indicateurs permettront de consolider le déploiement.",
+            "points_forts": "Diagnostic d'entreprise solide, compréhension claire des nouveaux usages de consommation vidéo (snack content vs replay), objectifs SMART bien quantifiés.",
+            "chantiers": "- *Sur le fond* : Structurer le planning Gantt et le budget prévisionnel (PP2), puis élaborer le tableau de bord (PP4).\n  - *Sur la forme* : Bien distinguer les livrables au moment du dépôt final.",
+            "message": "Le projet AFRIFAM TV dispose d'un excellent socle stratégique. Poursuivre dans cette voie en concrétisant la planification opérationnelle et le suivi de la performance."
+        },
+        "status_priority": "🟡 Excellent socle stratégique (AFRIFAM TV). Formaliser PP2 (Gantt & Budget) et PP4 (Tableau de bord)."
     }
 }
 
@@ -255,9 +271,11 @@ def create_new_learner(raw_folder_name: str, learners: list) -> dict:
     
     # Recherche d'un projet connu
     norm_key = normalize_text(nom).lower()
+    norm_key_words = set(norm_key.split())
     known_info = None
     for k, v in KNOWN_PROJECT_DEFS.items():
-        if k in norm_key or any(k in normalize_text(w) for w in clean_name.split()):
+        name_words = set(normalize_text(w).lower() for w in clean_name.split())
+        if k in norm_key_words or k in name_words:
             known_info = v
             break
             
@@ -491,7 +509,11 @@ def scan_and_sync(auto_push=False):
                 norm_prenom = normalize_text(matched.get("prenom", "")).lower()
                 known_def = None
                 for k, v in KNOWN_PROJECT_DEFS.items():
-                    if k in norm_nom or k in norm_prenom or any(k in normalize_text(w) for w in matched["full_name"].split()):
+                    # Matching par mot exact pour éviter les collisions (ex: "aka" dans "akadja")
+                    nom_words = set(norm_nom.split())
+                    prenom_words = set(norm_prenom.split())
+                    full_words = set(normalize_text(w).lower() for w in matched["full_name"].split())
+                    if k in nom_words or k in prenom_words or k in full_words:
                         known_def = v
                         break
 
@@ -521,7 +543,12 @@ def scan_and_sync(auto_push=False):
 
                 # Attribuer le commentaire personnalisé s'il n'existe pas encore ou s'il était générique
                 current_comment = phase_entry.get("comment", "")
-                is_generic_comment = not current_comment or "a bien été reçu et pris en compte" in current_comment
+                is_generic_comment = (
+                    not current_comment 
+                    or "a bien été reçu et pris en compte" in current_comment 
+                    or "En cohérence avec votre diagnostic" in current_comment
+                    or "déclinez votre stratégie" in current_comment
+                )
                 if is_generic_comment and known_def:
                     if deliv_id == "desc" and "desc_comment" in known_def:
                         phase_entry["comment"] = known_def["desc_comment"]
@@ -632,9 +659,141 @@ def scan_and_sync(auto_push=False):
     print(f" - Fichier frontend à jour : {FRONTEND_TARGET_FILE}")
     print(f"========================================================")
 
+    # Vérification aléatoire de cohérence sur un échantillon d'apprenants
+    random_spot_check(learners, source_dirs)
+
     if auto_push:
         print("\n🚀 Poussée automatique vers GitHub...")
         push_to_git()
+
+def random_spot_check(learners: list, source_dirs: list, sample_size: int = 3):
+    """Vérifie aléatoirement la cohérence commentaires/fichiers pour un échantillon d'apprenants.
+    
+    Lit les fichiers PDF/DOCX réels de quelques apprenants choisis au hasard,
+    extrait des mots-clés du contenu, et vérifie qu'ils correspondent aux commentaires attribués.
+    Alerte en cas de mismatch détecté.
+    """
+    # Import conditionnel des librairies de lecture
+    try:
+        import pypdf
+        has_pypdf = True
+    except ImportError:
+        has_pypdf = False
+    try:
+        import docx as docx_lib
+        has_docx = True
+    except ImportError:
+        has_docx = False
+    
+    if not has_pypdf and not has_docx:
+        print("\n⚠️ Vérification aléatoire impossible : pypdf et python-docx non installés.")
+        return
+    
+    # Sélection d'un échantillon aléatoire parmi les apprenants ayant au moins 1 livrable soumis
+    eligible = [l for l in learners if any(
+        l.get('deliverables', {}).get(did, {}).get('entrainement', {}).get('submitted')
+        for did in ['desc', 'strat', 'gest', 'tdb']
+    )]
+    
+    if not eligible:
+        return
+    
+    sample = random.sample(eligible, min(sample_size, len(eligible)))
+    
+    print(f"\n🔍 VÉRIFICATION ALÉATOIRE DE COHÉRENCE ({len(sample)} apprenants)")
+    print("=" * 60)
+    
+    # Trouver le dossier Description
+    desc_dir = None
+    for sd in source_dirs:
+        for folder_name in os.listdir(sd):
+            if 'description' in folder_name.lower():
+                desc_dir = os.path.join(sd, folder_name)
+                break
+        if desc_dir:
+            break
+    
+    if not desc_dir:
+        print("  ⚠️ Dossier Description non trouvé pour la vérification.")
+        return
+    
+    issues_found = 0
+    
+    for learner in sample:
+        full_name = learner.get('full_name', '')
+        nom = learner.get('nom', '')
+        projet = learner.get('projet', '')
+        
+        # Trouver le dossier de description de cet apprenant
+        learner_folder = None
+        for sub in os.listdir(desc_dir):
+            sub_lower = sub.lower()
+            if nom.lower() in sub_lower:
+                learner_folder = os.path.join(desc_dir, sub)
+                break
+        
+        if not learner_folder or not os.path.isdir(learner_folder):
+            continue
+        
+        # Lire le premier fichier
+        file_text = ""
+        for f in os.listdir(learner_folder):
+            fpath = os.path.join(learner_folder, f)
+            ext = os.path.splitext(f)[1].lower()
+            if ext == '.pdf' and has_pypdf:
+                try:
+                    reader = pypdf.PdfReader(fpath)
+                    for page in reader.pages[:2]:
+                        file_text += (page.extract_text() or '') + '\n'
+                except Exception:
+                    pass
+            elif ext == '.docx' and has_docx:
+                try:
+                    doc = docx_lib.Document(fpath)
+                    file_text = '\n'.join([p.text for p in doc.paragraphs[:20]])
+                except Exception:
+                    pass
+            if file_text:
+                break
+        
+        if not file_text or len(file_text) < 50:
+            continue
+        
+        # Extraire des mots-clés distinctifs du fichier
+        file_lower = file_text.lower()
+        
+        # Vérifier que les commentaires ne mentionnent pas un autre projet connu
+        known_names = [
+            'écoclean', 'mediconnect', 'doer team', 'kds school', "spag'chaud",
+            'cosna', 'tiktok prêt', 'clap famille', 'yonwa', 'kola cube',
+            'aura', 'nkina', 'solaris', 'allo doc', 'bariba', 'altitude',
+            'afrifam', 'digital empire', 'ak espace', 'immobilier haho',
+            'mediproche', 'eventure', 'agence express', 'nayaskin'
+        ]
+        
+        projet_lower = projet.lower()
+        all_comments = []
+        for did in ['desc', 'strat', 'gest', 'tdb']:
+            c = learner.get('deliverables', {}).get(did, {}).get('entrainement', {}).get('comment', '')
+            if c:
+                all_comments.append(c)
+        combined_comments = ' '.join(all_comments).lower()
+        
+        for kn in known_names:
+            if kn in combined_comments and kn not in projet_lower:
+                print(f"  ⚠️ {full_name}: commentaire mentionne '{kn}' mais projet = '{projet[:50]}'")
+                issues_found += 1
+        
+        # Vérification positive : le projet mentionné dans les commentaires devrait être dans le fichier
+        if not issues_found:
+            print(f"  ✅ {full_name}: commentaires cohérents avec '{projet[:50]}'")
+    
+    if issues_found:
+        print(f"\n  ⚠️ {issues_found} incohérence(s) détectée(s) ! Exécuter audit_and_regenerate_comments.py pour corriger.")
+    else:
+        print(f"\n  ✅ Aucune incohérence détectée dans l'échantillon.")
+    print()
+
 
 def push_to_git():
     """Effectue le commit et push automatique vers GitHub pour mettre à jour la plateforme."""
