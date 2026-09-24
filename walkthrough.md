@@ -86,5 +86,5 @@
    - Poussé sur `origin/main` avec succès.
    - Données actualisées : [pp_evaluations.json](file:///d:/Project/DCLIC/DclicApp/frontend/src/data/pp_evaluations.json).
 
-2. **Dépôt `DclicAssistant` (Scripts & Référentiel)** :
-   - Fichiers mis à jour : [sync_pp_evaluations.py](file:///d:/Project/DCLIC/DclicAssistant/scripts/sync_pp_evaluations.py), [walkthrough.md](file:///d:/Project/DCLIC/DclicAssistant/walkthrough.md).
+2. **Dépôt `Assistant Formation Initiale` (Scripts & Référentiel)** :
+   - Fichiers mis à jour : [sync_pp_evaluations.py](file:///d:/Project/DCLIC/Assistant%20Formation%20Initiale/scripts/sync_pp_evaluations.py), [walkthrough.md](file:///d:/Project/DCLIC/Assistant%20Formation%20Initiale/walkthrough.md).

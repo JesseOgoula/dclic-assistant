@@ -330,7 +330,7 @@ def build_html():
     return html
 
 def main():
-    workspace = r"c:\Users\chris\Desktop\Project\DCLIC\DclicAssistant"
+    workspace = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
     html_path = os.path.join(workspace, "Description_Projet_Canevas_et_Exemple.html")
     pdf_path = os.path.join(workspace, "Description_Projet_Canevas_et_Exemple.pdf")
 

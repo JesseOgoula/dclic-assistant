@@ -83,95 +83,8 @@ DELIVERABLES_DEF = [
     }
 ]
 
-# Diagnostics et cadrages personnalisés connus pour les projets identifiés
-KNOWN_PROJECT_DEFS = {
-    "aveto": {
-        "projet": "MediConnect (Téléconsultation médicale en ligne)",
-        "desc_comment": "Excellent cadrage de projet pour MediConnect. Votre ambition de démocratiser la téléconsultation médicale en ligne en Afrique de l'Ouest répond à un enjeu de santé publique critique. Vos segments cibles (zones périurbaines et enclavées) sont très bien ciblés. Veillez à bien intégrer les aspects réglementaires et la confiance des utilisateurs dans la suite de vos livrables.",
-        "strat_comment": "Très bonne stratégie marketing pour MediConnect. Vos deux personas (Aïcha, 28 ans et Michel, 46 ans) sont bien caractérisés avec des besoins et freins réalistes. Votre étude du marché béninois (benchmark DotoMed) et votre objectif SMART (+40 % de consultations en ligne en 6 mois) sont très cohérents. Pour le dépôt final : approfondissez la différenciation concurrentielle par rapport aux solutions existantes et précisez le budget alloué à l'acquisition WhatsApp/Facebook.",
-        "gest_comment": "Votre démarche Agile découpée en 3 étapes claires (Planification, Préparation/Production, Mise en œuvre) est bien adaptée à une start-up numérique. Pour le rendu final : veillez à joindre un tableau Gantt visuel précis avec les jalons temporels hebdomadaires, et détaillez l'affectation nominative des profils RH (CM, développeur, graphiste) ainsi que le chiffrage budgétaire par tâche."
-    },
-    "akadja": {
-        "projet": "Doer Team Kids Academy (Soutien scolaire & cours particuliers bilingues)",
-        "desc_comment": "Très bonne note de cadrage pour Doer Team Kids Academy. Votre proposition de valeur sur le soutien scolaire bilingue (français/anglais) du CI à la Terminale répond à un vrai besoin des familles. Votre objectif de progression de 12 à 20 élèves est clair et réaliste.",
-        "strat_comment": "Remarquable document de stratégie marketing. L'opposition entre le « parent stratège d'examen » (35-50 ans) et le « parent accompagnateur au long cours » (28-40 ans) est particulièrement fine et opérationnelle. Votre étude concurrentielle en 3 catégories montre bien la valeur ajoutée de votre offre globale. Pour le dépôt final : détaillez davantage vos actions d'activation et précisez vos indicateurs de conversion via les groupes WhatsApp de parents d'élèves."
-    },
-    "amoussa": {
-        "projet": "KDS School (École des métiers du numérique et création de contenu)",
-        "desc_comment": "Très bon cadrage de votre projet KDS School. La formation aux métiers du numérique et de la création de contenu répond à une forte demande des jeunes et professionnels. Pour le Livrable 1 (Stratégie marketing) : définissez 2 personas types (étudiant en reconversion et professionnel en perfectionnement), analysez 3 centres ou plateformes concurrentes de formation, et fixez des objectifs SMART d'acquisition d'inscrits."
-    },
-    "attiogbe": {
-        "projet": "Santé Numérique / Télémédecine en Afrique de l'Ouest",
-        "desc_comment": "Excellente analyse contextuelle et benchmark sectoriel approfondi sur la télémédecine en Afrique de l'Ouest francophone et au Togo. Votre socle documentaire est solide et bien documenté. Pour la suite (Livrable 1 - Stratégie) : traduisez ce benchmark en stratégie opérationnelle avec 2 personas patients/médecins, vos canaux d'acquisition prioritaires et vos objectifs chiffrés."
-    },
-    "allarabeye": {
-        "projet": "Développement de l'audience d'une chaîne TV tchadienne via le numérique",
-        "desc_comment": "Projet très intéressant et pertinent sur le développement d'audience d'une chaîne de télévision tchadienne via les canaux numériques. L'adaptation aux nouveaux usages mobiles et réseaux sociaux est primordiale. Pour le Livrable 1 : structurez vos 2 personas (le téléspectateur traditionnel et le jeune connecté sur mobile), benchmarquez 3 médias concurrents au Tchad/Afrique centrale, et précisez vos leviers d'acquisition digitale (extraits vidéo courts, communauté)."
-    },
-    "aka": {
-        "nom": "AKA",
-        "prenom": "Ablan Marie",
-        "full_name": "AKA Ablan Marie",
-        "projet": "Spag'Chaud (Restauration rapide étudiante sur campus — Côte d'Ivoire)",
-        "desc_comment": "Très belle initiative avec Spag'Chaud. Répondre au besoin des étudiants des campus ivoiriens avec une offre de repas chauds, rapides et abordables est une proposition de valeur forte. Pour le Livrable 1 (Stratégie marketing) : définissez 2 personas d'étudiants types, analysez au moins 3 offres concurrentes sur les campus, et détaillez vos canaux d'acquisition (notamment réseaux sociaux et commande par WhatsApp).",
-        "strat_comment": "Très bon document de stratégie marketing pour Spag'Chaud. Vos personas étudiants sont pertinents et vos canaux de diffusion adaptés à la cible jeune. Pour votre version finale : assurez-vous de bien chiffrer vos objectifs SMART de vente et approfondissez vos actions de fidélisation sur le campus.",
-        "synthesis": {
-            "coherence": "Le concept de restauration rapide sur campus est limpide et la stratégie marketing cible adéquatement la communauté estudiantine. Les livrables de gestion de projet (PP2) et tableau de bord (PP4) sont attendus pour boucler le dispositif.",
-            "points_forts": "Projet pragmatique répondant à un besoin quotidien réel, proposition de valeur claire (prix abordable et rapidité).",
-            "chantiers": "- *Sur le fond* : Finaliser le planning Gantt et le budget (PP2), puis concevoir le tableau de bord (PP4).\n  - *Sur la forme* : Maintenir la clarté visuelle et respecter les limites de mots.",
-            "message": "Le projet Spag'Chaud démarre sur d'excellentes bases marketing. Poursuivre sur cette belle dynamique en structurant les livrables de gestion de projet et les indicateurs de suivi."
-        },
-        "status_priority": "🟡 Bon démarrage (Description + Stratégie). Finaliser PP2 (Gantt & Budget) et PP4 (Tableau de bord)."
-    },
-    "adou": {
-        "nom": "ADOU",
-        "prenom": "Sokhna",
-        "full_name": "ADOU Sokhna",
-        "projet": "COSNA Investments (Écoconstruction & Briques de Terre Compressée Stabilisée - BTCS)",
-        "desc_comment": "Excellent cadrage de projet pour COSNA Investments. Le positionnement sur la construction écologique et les matériaux durables (BTCS) en Afrique de l'Ouest répond à un enjeu d'avenir majeur. Vos cibles (particuliers et promoteurs) sont clairement identifiées.",
-        "strat_comment": "Remarquable stratégie marketing pour COSNA Investments. Vos 2 personas (particulier constructeur et promoteur professionnel) sont bien documentés et le plan d'acquisition digitale valorise parfaitement les atouts écologiques et économiques de votre offre.",
-        "gest_comment": "Très bonne démarche de gestion de projet avec le planning Gantt et le budget prévisionnel associés. L'organisation des ressources humaines et le chiffrage par phases sont réalistes et bien articulés avec la stratégie marketing.",
-        "tdb_comment": "Tableau de bord bien structuré avec des indicateurs de suivi clairs (visibilité digitale, leads qualifiés, conversions). Les métriques choisies permettront un pilotage rigoureux de votre performance commerciale.",
-        "synthesis": {
-            "coherence": "Parcours préparatoire V1 complet et exemplaire sur les 4 volets Moodle. L'alignement entre le produit écologique (BTCS), la stratégie d'acquisition, le Gantt/budget et les indicateurs KPIs est parfaitement maîtrisé.",
-            "points_forts": "Dossier très complet et professionnel, maîtrise des enjeux de la construction durable, planning et budget bien modélisés.",
-            "chantiers": "- *Sur le fond* : Produire les supports de communication (PP3 - flyer et vidéo < 1mn30).\n  - *Sur la forme* : Veiller au respect des limites de mots pour le rendu final.",
-            "message": "Toutes mes félicitations pour la complétude et la grande qualité de l'ensemble des livrables V1. Socle remarquable pour aborder les créations de contenus (PP3) et viser l'excellence lors de la restitution finale !"
-        },
-        "status_priority": "🟢 Parcours V1 complet (4/4). Préparer les créations de contenu (PP3) et la restitution finale."
-    },
-    "aiglo": {
-        "nom": "AIGLO",
-        "prenom": "Sègla Gérald P.",
-        "full_name": "AIGLO Sègla Gérald P.",
-        "projet": "TikTok Prêt-à-Porter (Boutique physique connectée de mode et prêt-à-porter)",
-        "desc_comment": "Concept très original et stimulant de boutique connectée en milieu rural, alliant point de vente physique et leviers numériques (TikTok, Facebook, Mobile Money). La sélection d'articles tendance répond à une demande locale avérée.",
-        "strat_comment": "Bonne ébauche stratégique axée sur la visibilité TikTok. Pour le rendu final : veillez à bien structurer les 2 personas types, à benchmarquer 3 concurrents (boutiques physiques ou en ligne), et à préciser vos mécanismes de conversion et fidélisation en magasin.",
-        "gest_comment": "Votre plan opérationnel pose de bonnes bases. Pour le rendu final : formalisez un planning Gantt clair avec les étapes clés (approvisionnement, création de contenu TikTok, promotions) et détaillez le budget par tâche.",
-        "synthesis": {
-            "coherence": "Idée novatrice de commerce connecté en zone semi-rurale. La description, la stratégie et la gestion de projet sont posées. Reste à concevoir le tableau de bord (PP4) pour suivre la conversion magasin/digital.",
-            "points_forts": "Originalité du concept phygital (boutique physique + TikTok), ancrage commercial concret.",
-            "chantiers": "- *Sur le fond* : Élaborer le Tableau de bord (PP4) et produire les contenus promotionnels (PP3).\n  - *Sur la forme* : Structurer le Gantt sous format tabulaire et préciser le budget chiffré.",
-            "message": "Projet phygital TikTok Prêt-à-Porter très prometteur. Continuer ainsi en finalisant les indicateurs de performance (PP4) et les supports de communication (PP3)."
-        },
-        "status_priority": "🟡 Bon avancement (3/4 livrables). Concevoir le Tableau de bord (PP4) et les contenus (PP3)."
-    },
-    "mukonkole": {
-        "nom": "MUKONKOLE",
-        "prenom": "Ariane",
-        "full_name": "MUKONKOLE Ariane",
-        "projet": "AFRIFAM TV – Cap sur le Numérique (Transition digitale d'une chaîne TV panafricaine)",
-        "desc_comment": "Remarquable note de cadrage et stratégie marketing pour AFRIFAM TV. Votre projet de transition numérique pour une chaîne de télévision de 50 collaborateurs est ambitieux et très bien structuré. Vos deux segments d'audience (les Millennials/Gen Z sur mobile et la diaspora via le streaming/VOD) sont particulièrement pertinents. Vos objectifs SMART (100 000 abonnés cumulés, 50 000 visiteurs uniques/mois et 15 % de revenus publicitaires en ligne) sont clairs et chiffrés. Vos leviers d'action (recyclage de formats courts pour TikTok/Shorts, community management interactif et campagnes payantes) répondent parfaitement aux enjeux de visibilité.",
-        "strat_comment": "Excellent travail stratégique pour AFRIFAM TV. Votre vision de la convergence TV-Web et du formatage de contenus natifs (Reels, TikTok) est opérationnelle. Pour le dépôt final : veillez à approfondir le benchmark de 3 médias ou chaînes concurrentes et formalisez une matrice SWOT détaillée.",
-        "synthesis": {
-            "coherence": "Très bon cadrage de projet intégrant d'emblée la vision de stratégie marketing digitale pour AFRIFAM TV. Les livrables de gestion de projet (Gantt & Budget) et le tableau de bord d'indicateurs permettront de consolider le déploiement.",
-            "points_forts": "Diagnostic d'entreprise solide, compréhension claire des nouveaux usages de consommation vidéo (snack content vs replay), objectifs SMART bien quantifiés.",
-            "chantiers": "- *Sur le fond* : Structurer le planning Gantt et le budget prévisionnel (PP2), puis élaborer le tableau de bord (PP4).\n  - *Sur la forme* : Bien distinguer les livrables au moment du dépôt final.",
-            "message": "Le projet AFRIFAM TV dispose d'un excellent socle stratégique. Poursuivre dans cette voie en concrétisant la planification opérationnelle et le suivi de la performance."
-        },
-        "status_priority": "🟡 Excellent socle stratégique (AFRIFAM TV). Formaliser PP2 (Gantt & Budget) et PP4 (Tableau de bord)."
-    }
-}
+# Référentiel dynamique (aucun projet codé en dur, extraction 100% sur les fichiers Moodle)
+KNOWN_PROJECT_DEFS = {}
 
 def clean_comment(text: str) -> str:
     """Nettoie un commentaire en retirant toute formule de salutation au début et toute signature à la fin."""
@@ -193,31 +106,37 @@ def normalize_text(text: str) -> str:
     return ' '.join(text.split())
 
 def match_learner_name(raw_folder_name: str, learners: list) -> dict:
-    """Associe un dossier apprenant Moodle à un apprenant de la base."""
+    """Associe un dossier apprenant Moodle à un apprenant de la base de façon stricte et sans ambiguïté."""
     clean_folder = raw_folder_name.split('_')[0].strip()
     norm_folder = normalize_text(clean_folder)
     folder_words = set(norm_folder.split())
 
+    # 1. Correspondance exacte intégrale
+    for l in learners:
+        norm_full = normalize_text(l.get('full_name', ''))
+        full_words = set(norm_full.split())
+        if norm_folder == norm_full or folder_words == full_words:
+            return l
+
+    # 2. Correspondance forte (inclusion stricte complète)
+    for l in learners:
+        norm_full = normalize_text(l.get('full_name', ''))
+        full_words = set(norm_full.split())
+        # Si tous les mots du dossier sont dans le nom complet ou inversement (avec au moins 2 mots communs)
+        if len(folder_words) >= 2 and len(full_words) >= 2:
+            if folder_words.issubset(full_words) or full_words.issubset(folder_words):
+                return l
+
+    # 3. Correspondance par chevauchement élevé (au moins 80% des mots identiques)
     best_match = None
     max_overlap = 0
-
     for l in learners:
-        norm_full = normalize_text(l['full_name'])
+        norm_full = normalize_text(l.get('full_name', ''))
         full_words = set(norm_full.split())
         overlap = len(folder_words.intersection(full_words))
-        
-        if folder_words == full_words:
-            return l
-        
-        # Check if surname and at least one firstname match
-        norm_nom = normalize_text(l.get('nom', ''))
-        nom_words = set(norm_nom.split())
-        if nom_words and nom_words.issubset(folder_words):
-            if overlap > max_overlap:
-                best_match = l
-                max_overlap = overlap
-
-        if overlap >= 2 and overlap > max_overlap:
+        total_unique = len(folder_words.union(full_words))
+        ratio = overlap / total_unique if total_unique > 0 else 0
+        if ratio >= 0.75 and overlap > max_overlap:
             best_match = l
             max_overlap = overlap
 
@@ -353,7 +272,7 @@ def get_submission_directories():
     for item in os.listdir(PROJECT_ROOT):
         full_p = os.path.join(PROJECT_ROOT, item)
         if os.path.isdir(full_p) and ("PP" in item.upper() or "CPP" in item.upper()):
-            if not item.startswith(".") and item not in ["DclicApp", "DclicAssistant"]:
+            if not item.startswith(".") and item not in ["DclicApp", "DclicAssistant", "Assistant Formation Initiale", "Assistant_Formation_Initiale"]:
                 canon = os.path.normcase(os.path.realpath(full_p))
                 if canon not in seen_paths:
                     seen_paths.add(canon)
